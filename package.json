@@ -1,5 +1,5 @@
 {
-  "name": "socket.io-redis",
+  "name": "socket.io-redis-fixed-memleak",
   "version": "0.1.4",
   "description": "",
   "repository": {
