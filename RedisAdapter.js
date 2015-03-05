@@ -5,6 +5,7 @@ var msgpack = require('msgpack-js');
 var Emitter = require('events').EventEmitter;
 var async = require('async');
 var debug = require('debug')('socket.io-redis');
+var assert = require('assert');
 
 /**
  * Adapter constructor.
@@ -41,13 +42,17 @@ RedisAdapter.prototype._subscribe = function () {
  */
 RedisAdapter.prototype.dispose = function () {
   debug('disposing adapter');
-  this.nsp = null;
-  this.subClient.removeListener('message', this.onmessage);
-  this.subClient = null;
-  this.pubClient = null;
-  this.rooms = {};
-  this.sids = {};
-};
+  
+  this.subClient.unsubscribe(this.prefix + '#' + this.nsp.name + '#', function onUnsubscribe(err) {
+    assert(!err);
+    
+    this.nsp = null;
+    this.subClient.removeListener('message', this.onmessage);
+    this.subClient = null;
+    this.pubClient = null;
+    this.rooms = {};
+    this.sids = {};
+  }.bind(this)};
 
 
 /**
