@@ -41,13 +41,15 @@ RedisAdapter.prototype._subscribe = function () {
  */
 RedisAdapter.prototype.dispose = function () {
   debug('disposing adapter');
-  this.nsp = null;
-  this.subClient.removeListener('message', this.onmessage);
-  this.subClient = null;
-  this.pubClient = null;
-  this.rooms = {};
-  this.sids = {};
-};
+  
+  this.subClient.unsubscribe(this.prefix + '#' + this.nsp.name + '#', function onUnsubscribe(err) {
+    this.nsp = null;
+    this.subClient.removeListener('message', this.onmessage);
+    this.subClient = null;
+    this.pubClient = null;
+    this.rooms = {};
+    this.sids = {};
+  }.bind(this)};
 
 
 /**
