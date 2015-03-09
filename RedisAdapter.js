@@ -52,7 +52,8 @@ RedisAdapter.prototype.dispose = function () {
     this.pubClient = null;
     this.rooms = {};
     this.sids = {};
-  }.bind(this)};
+  }.bind(this));
+};
 
 
 /**
