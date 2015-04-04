@@ -1,7 +1,6 @@
 'use strict';
 
 var Adapter = require('socket.io-adapter');
-var msgpack = require('msgpack-js');
 var Emitter = require('events').EventEmitter;
 var async = require('async');
 var debug = require('debug')('socket.io-redis');
@@ -63,8 +62,7 @@ RedisAdapter.prototype.dispose = function () {
  */
 
 RedisAdapter.prototype.onmessage = function (channel, msg) {
-  var pieces = channel.split('#');
-  var args = msgpack.decode(msg);
+  var args = JSON.parse(msg);
   var packet;
 
   if (this.uid == args.shift()) return debug('ignore same uid');
@@ -99,12 +97,12 @@ RedisAdapter.prototype.broadcast = function (packet, opts, remote) {
     if (opts.rooms) {
       opts.rooms.forEach(function (room) {
         var chn = this.prefix + '#' + packet.nsp + '#' + room + '#';
-        var msg = msgpack.encode([this.uid, packet, opts]);
+        var msg = JSON.stringify([this.uid, packet, opts]);
         this.pubClient.publish(chn, msg);
       }, this);
     } else {
       var chn = this.prefix + '#' + packet.nsp + '#';
-      var msg = msgpack.encode([this.uid, packet, opts]);
+      var msg = JSON.stringify([this.uid, packet, opts]);
       this.pubClient.publish(chn, msg);
     }
   }
