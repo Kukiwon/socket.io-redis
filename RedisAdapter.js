@@ -19,6 +19,7 @@ function RedisAdapter(uid, prefix, pub, sub, namespace) {
   this.prefix = prefix;
   this.pubClient = pub;
   this.subClient = sub;
+  this.subClient.setMaxListeners(50);
   this.onmessage = this.onmessage.bind(this);
   this._subscribe();
 }
