@@ -52,6 +52,11 @@ function adapter(uri, opts){
   if (!pub) pub = redis(port, host);
   if (!sub) sub = redis(port, host, { detect_buffers: true });
 
+  // Handle redis errors.
+  if( opts.on_redis_error ){
+    sub.on('error',opts.on_redis_error);
+    pub.on('error',opts.on_redis_error);
+  }
   // this server's key
   var uid = uid2(6);
 
