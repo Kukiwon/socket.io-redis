@@ -34,6 +34,7 @@ The following options are allowed:
 - `port`: port to connect to redis on (`6379`)
 - `pubClient`: optional, the redis client to publish events on
 - `subClient`: optional, the redis client to subscribe to events on
+- `on_redis_error`: optional, callback for redis errors
 
 If you decide to supply `pubClient` and `subClient`, make sure you use
 [node_redis](https://github.com/mranney/node_redis) as a client or one
