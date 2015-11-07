@@ -4,7 +4,8 @@
  */
 
 var uid2 = require('uid2');
-var redis = require('redis').createClient;
+var redis = require('ioredis');
+
 var RedisAdapter = require('./RedisAdapter');
 /**
  * Module exports.
@@ -33,9 +34,11 @@ function adapter(uri, opts) {
   var prefix = opts.key || 'socket.io';
 
   // init clients if needed
-  if (!pub) pub = redis(opts);
+  if (!pub) {
+    pub = uri ? new redis(uri, opts) : new redis(opts);
+  }
   if (!sub) {
-    sub = redis(Object.assign({return_buffers: true}, opts));
+    sub = uri ? new redis(uri, opts) : new redis(opts);
   }
 
   // Handle redis errors.

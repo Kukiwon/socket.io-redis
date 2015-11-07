@@ -29,19 +29,17 @@ is located. For a list of options see below.
 
 The following options are allowed:
 
-- `key`: the name of the key to pub/sub events on as prefix (`socket.io`)
-- `host`: host to connect to redis on (`localhost`)
-- `port`: port to connect to redis on (`6379`)
 - `pubClient`: optional, the redis client to publish events on
 - `subClient`: optional, the redis client to subscribe to events on
 - `on_redis_error`: optional, callback for redis errors
 
-If you decide to supply `pubClient` and `subClient`, make sure you use
-[node_redis](https://github.com/mranney/node_redis) as a client or one
-with an equivalent API.
+see https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options for other options. The uri/options are passed straight into ioredis, if clients
+aren't explicitly passed in.
 
-If you supply clients, make sure you initialized them with 
-the `return_buffers` option set to `true`.
+
+If you decide to supply `pubClient` and `subClient`, make sure you use
+[ioredis](https://github.com/luin/ioredis) as a client or one
+with an equivalent API.
 
 ### RedisAdapter
 
@@ -65,21 +63,14 @@ adapter.pubClient.on('error', function(){});
 adapter.subClient.on('error', function(){});
 ```
 
-## Custom client (eg: with authentication)
-
-If you need to create a redisAdapter to a redis instance
-that has a password, use pub/sub options instead of passing
-a connection string.
+Optionally, pass the `on_redis_error` option, which is
+equivalent to:
 
 ```js
-var redis = require('redis').createClient;
-var adapter = require('socket.io-redis');
-var pub = redis(port, host, { auth_pass: "pwd" });
-var sub = redis(port, host, { return_buffers: true, auth_pass: "pwd" });
-io.adapter(adapter({ pubClient: pub, subClient: sub }));
+adapter.pubClient.on('error', opts.on_redis_error);
+adapter.subClient.on('error', opts.on_redis_error);
 ```
 
-Make sure the `return_buffers` option is set to `true` for the sub client.
 
 ## License
 
