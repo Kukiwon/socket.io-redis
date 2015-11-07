@@ -74,7 +74,7 @@ function adapter(uri, opts){
     sub.subscribe(prefix + '#' + nsp.name + '#', function(err){
       if (err) self.emit('error', err);
     });
-    sub.on('message', this.onmessage.bind(this));
+    sub.on('messageBuffer', this.onmessage.bind(this));
   }
 
   /**
