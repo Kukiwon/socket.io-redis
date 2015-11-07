@@ -210,7 +210,7 @@ function adapter(uri, opts){
     var self = this;
     var rooms = this.sids[id];
 
-    if (!rooms) return process.nextTick(fn.bind(null, null));
+    if (!rooms) return process.nextTick(function() { if (fn) fn(null); });
 
     async.each(Object.keys(rooms), function(room, next){
       if (rooms.hasOwnProperty(room)) {
