@@ -4,7 +4,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Automattic/socket.io-redis.git"
+    "url": "https://github.com/Kukiwon/socket.io-redis.git"
   },
   "scripts": {
     "test": "mocha"
@@ -13,7 +13,7 @@
     "async": "1.5.0",
     "debug": "2.2.0",
     "ioredis": "1.10.0",
-    "socket.io-adapter": "automattic/socket.io-adapter#de5cba",
+    "socket.io-adapter": "https://github.com/socketio/socket.io-adapter.git#de5cba",
     "uid2": "0.0.3"
   },
   "devDependencies": {
