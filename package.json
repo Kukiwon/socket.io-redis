@@ -13,7 +13,7 @@
     "async": "1.5.0",
     "debug": "2.2.0",
     "ioredis": "1.10.0",
-    "socket.io-adapter": "https://github.com/socketio/socket.io-adapter.git#de5cba",
+    "socket.io-adapter": "https://github.com/Kukiwon/socket.io-adapter.git",
     "uid2": "0.0.3"
   },
   "devDependencies": {
